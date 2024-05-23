@@ -6,6 +6,7 @@ import { StoreProvider } from "./store/StoreContext"
 import Login from "./components/pages/developer/access/Login"
 import Post from "./components/pages/developer/dashboard/post/Post"
 import Users from "./components/pages/developer/dashboard/user/Users"
+import PageNotFound from "./components/partials/PageNotFound"
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/post" element={<Post/>}/>
         <Route path="/users" element={<Users/>}/>
+        <Route path="/*" element={<PageNotFound/>}/>
         
         </Routes>
       </Router>
