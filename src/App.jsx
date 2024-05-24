@@ -7,6 +7,8 @@ import Login from "./components/pages/developer/access/Login"
 import Post from "./components/pages/developer/dashboard/post/Post"
 import Users from "./components/pages/developer/dashboard/user/Users"
 import PageNotFound from "./components/partials/PageNotFound"
+import Category from "./components/pages/developer/dashboard/category/Category"
+import ProtectedRoute from "./components/pages/developer/access/ProtectedRoute"
 
 function App() {
 
@@ -21,12 +23,13 @@ function App() {
     <Router>
         <Routes>
         <Route path="/home" element={<Home/>}/>
-        <Route path="/single" element={<Single/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/post" element={<Post/>}/>
-        <Route path="/users" element={<Users/>}/>
-        <Route path="/*" element={<PageNotFound/>}/>
-        
+        <Route path="/single" element={<ProtectedRoute><Single/></ProtectedRoute>}/>
+        <Route path="/login" element={<ProtectedRoute><Login/></ProtectedRoute>}/>
+        <Route path="/dashboard/post" element={<ProtectedRoute><Post/></ProtectedRoute>}/>
+        <Route path="/users" element={<ProtectedRoute><Users/></ProtectedRoute>}/>
+        <Route path="/*" element={<ProtectedRoute><PageNotFound/></ProtectedRoute>}/>
+        <Route path="/dashboard/category" element={<ProtectedRoute><Category/></ProtectedRoute>}/>
+    
         </Routes>
       </Router>
       </StoreProvider>

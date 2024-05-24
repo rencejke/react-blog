@@ -3,8 +3,25 @@ import UIHeader from "../partials/UIHeader";
 import UIFooter from "../partials/UIFooter";
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { devBaseImgUrl, getUrlParam } from "../../../../helpers/functions-general";
+import useQueryData from "../../../../custom-hook/useQueryData";
+import Markdown from "react-markdown";
+
 
 const Single = () => {
+  const id = getUrlParam().get('id')
+
+  const {
+    isLoading,
+    isFetching,
+    error,
+    data: post,
+  } = useQueryData (
+   `/v1/post/${id}`, // endpoint
+   "get", // method
+   "post", // key
+  );
+
   return (
     <div>
       <UIHeader />
@@ -15,70 +32,31 @@ const Single = () => {
         bg-opacity-10 rounded-lg border-2 border-header border-opacity-40
          "
           >
-            Lorem ipsum dolor sit amet consectetur.
+          {post?.data[0].post_title}
           </h1>
         </div>
       </div>
 
       <div className="container">
         <div className="grid md:grid-cols-[2fr_1fr] gap-10">
+          <div> 
+          <img src={`${devBaseImgUrl}/${post?.data[0].post_image}`} alt=""  className="rounded-md"/>
+
           <article>
-            <div className="mb-10">
-              <small
-                className="hover:bg-accent bg-stone-600  px-2 py-1 rounded-lg text-white font-bold 
-               text-xs mb-3 inline-block"
-              > Travel
-              </small>
+          <ul className=" flex justify-between items-center list-none">
 
-              <h2>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Similique, possimus?
-              </h2>
+         <li>{post?.data[0].post_category}</li>
+         <li>{post?.data[0].post_publish_date}</li>
+        </ul>
 
-              <div className="flex justify-between items-center mt-4">
-                <div className="flex gap-3 items-center ">
-                  <img
-                    src="https://via.placeholder.com/40x40"
-                    alt=""
-                    className="rounded-full size-10 object-cover mb-0"
-                  />
-                  <small className="mb-0 text-nowrap opacity-60">
-                    Johnny Hale
-                  </small>
-                </div>
-                <small className="opacity-60">August 23, 2022</small>
-              </div>
-            </div>
+        <Markdown>
+        {post?.data[0].post_article}
+        </Markdown>
 
-            <img
-              src="https://i.pinimg.com/736x/9b/d9/cb/9bd9cb0aec2ea2fd2bfb766351952bdf.jpg"
-              alt=""
-            />
-            <h2>Lorem ipsum dolor sit amet consectetur adipisicing</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Reiciendis obcaecati vel fuga, modi autem eum! Recusandae,
-              delectus iure expedita vel, veritatis cupiditate assumenda, illum
-              nesciunt error quisquam iste hic aliquam.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur
-              voluptatibus est saepe esse, quod delectus dolores aperiam
-              corporis recusandae nesciunt.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam
-              ipsum sed, nam ad odio adipisci.
-            </p>
-            <ul>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-            </ul>
-          </article>
+      
+     </article>
+            
+          </div>
           <aside className="">
 
             <div className="sticky top-4">

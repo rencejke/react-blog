@@ -40,7 +40,7 @@ const Login = () => {
           dispatch(setCredentials(data.data[0]));
           setStorageRoute(data.data[1]);
           dispatch(setIsLogin(false));
-          navigation('/post')
+          navigation('/dashboard/post')
         }
       }
     },

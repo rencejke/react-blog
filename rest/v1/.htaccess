@@ -17,6 +17,12 @@ RewriteRule ^post/([0-9]+)$ controllers/post/post.php?postid=$1 [L]
 RewriteRule ^post/active/([0-9]+)$ controllers/post/active.php?postid=$1 [L]
 RewriteRule ^post/search$ controllers/post/search.php [L]
 
+### SETTING ROLES ###
+RewriteRule ^category$ controllers/category/category.php [L]
+RewriteRule ^category/([0-9]+)$ controllers/category/category.php?categoryid=$1 [L]
+RewriteRule ^category/active/([0-9]+)$ controllers/category/active.php?categoryid=$1 [L]
+RewriteRule ^category/search$ controllers/category/search.php [L]
+
 
 ### SETTING USER###
 RewriteRule ^user$ controllers/user/user.php [L]
@@ -27,3 +33,5 @@ RewriteRule ^user/password$ controllers/user/set-password.php [L]
 RewriteRule ^user/reset$ controllers/user/reset-password.php [L]
 RewriteRule ^user/login$ controllers/user/login.php [L]
 RewriteRule ^user/token$ controllers/user/token.php [L]
+
+
