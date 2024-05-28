@@ -53,6 +53,8 @@ const PostTable = ({setItemEdit, isLoading, isFetching, post}) => {
                                 <th className='w-[150px]'>Author</th>
                                 <th className='w-[150px]'>Article</th>
                                 <th className='w-[80px]'>Category</th>
+                                <th className='w-[80px]'>Tag</th>
+                                <th className='w-[80px]'>Featured</th>
                                 <th className='w-[80px]'>Published</th>
                                 <th className='w-[100px]'>Action</th>
                             </tr>
@@ -81,7 +83,9 @@ const PostTable = ({setItemEdit, isLoading, isFetching, post}) => {
                         <td>{item.post_image}</td>
                         <td>{item.post_author}</td>
                         <td>{item.post_article}</td>
-                        <td>{item.post_category}</td>
+                        <td>{item.category_title}</td>
+                        <td>{item.tag_title}</td>
+                        <td>{item.post_is_featured === 1 ? "Yes" : "No"}</td>
                         <td>{item.post_publish_date}</td>
                         
                         

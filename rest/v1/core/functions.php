@@ -207,6 +207,13 @@ function checkUpdate($object)
     return $query;
 }
 
+function checkReadByFeatured($object)
+{
+    $query = $object->readByFeatured();
+    checkQuery($query, "There's a problem processing your request. (read featured)");
+    return $query;
+}
+
 // Active 
 function checkActive($object)
 {

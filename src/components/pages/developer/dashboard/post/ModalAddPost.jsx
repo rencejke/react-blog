@@ -12,6 +12,7 @@ import ModalWrapper from '../../../../partials/ModalWrapper'
 import useUploadPhoto from '../../../../custom-hook/useUploadPhoto'
 import { devBaseImgUrl } from '../../../../helpers/functions-general'
 import useQueryData from '../../../../custom-hook/useQueryData'
+import { motion } from 'framer-motion'
 
 const ModalAddPost = ({itemEdit, position}) => {
     const {store, dispatch} = React.useContext(StoreContext)
@@ -45,14 +46,19 @@ const ModalAddPost = ({itemEdit, position}) => {
       );
 
       const {
-        isLoading,
-        isFetching,
-        error,
         data: category,
       } = useQueryData(
         `/v1/category`, // endpoint
         "get", // method
         "category" // key
+      );
+
+      const {
+        data: tag,
+      } = useQueryData(
+        `/v1/tag`, // endpoint
+        "get", // method
+        "tag" // key
       );
 
     
@@ -61,6 +67,8 @@ const ModalAddPost = ({itemEdit, position}) => {
           post_title : itemEdit ? itemEdit.post_title : "",
           post_image : itemEdit ? itemEdit.post_image : "",
           post_category_id : itemEdit ? itemEdit.post_category_id : "",
+          post_tag_id : itemEdit ? itemEdit.post_tag_id : "",
+          post_is_featured : itemEdit ? itemEdit.post_is_featured : 0,
           post_author : itemEdit ? itemEdit.post_author : "",
           post_article : itemEdit ? itemEdit.post_article : "", 
           post_publish_date : itemEdit ? itemEdit.post_publish_date : "",
@@ -72,6 +80,8 @@ const ModalAddPost = ({itemEdit, position}) => {
        
         post_title: Yup.string().required("Required"),
         post_category_id: Yup.string().required("Required"),
+        post_tag_id: Yup.string().required("Required"),
+        post_is_featured: Yup.string().required("Required"),
         post_author: Yup.string().required("Required"),
         post_article: Yup.string().required("Required"),
         post_publish_date: Yup.string().required("Required"),
@@ -79,14 +89,14 @@ const ModalAddPost = ({itemEdit, position}) => {
 
      })
 
-
-     
-
-
   return (
     <div>
       <ModalWrapper position={position}>
-      <div className="main-modal w-[900px] bg-secondary text-content">
+      <motion.div className="main-modal w-[900px] bg-secondary text-content"
+      initial={{ opacity: 0, y:"50px" }}
+      animate={{ opacity: 1, y:"0"}}
+      exit={{ opacity: 0, y:"50px" }}
+      >
                 <div className="modal-header p-4 relative">
                     <h2>New Student</h2>
                     <button className='absolute top-[25px] right-4' onClick={handleClose}><LiaTimesSolid/></button>
@@ -167,6 +177,21 @@ const ModalAddPost = ({itemEdit, position}) => {
 
                 </div>
                         
+                <div className="input-wrap">
+                                        <InputSelect
+                                            label="Tag"
+                                            type="text"
+                                            name="post_tag_id">
+                                                {tag?.data.map((item, key)=> (
+                                                    <React.Fragment key={key}>
+                                                        <option hidden>Select</option>
+                                                        <option value={item.tag_aid} >{item.tag_title}</option>
+                                                    </React.Fragment >
+                                                )
+                                            )} 
+                                        </InputSelect>
+                </div>
+
 
                 <div className="input-wrap">
                                         <InputSelect
@@ -182,6 +207,19 @@ const ModalAddPost = ({itemEdit, position}) => {
                                             )} 
                                         </InputSelect>
                                         </div>
+
+                                        <div className="input-wrap">
+                                        <InputSelect
+                                            label="Is Featured"
+                                            type="text"
+                                            name="post_is_featured">
+                                                 <option hidden>Select</option>
+                                                <option value="1" >Yes</option>
+                                                <option value="0" >No</option>
+                                        </InputSelect>
+                </div>
+
+                                       
 
                         <div className="input-wrap">
                         <InputText
@@ -206,7 +244,7 @@ const ModalAddPost = ({itemEdit, position}) => {
                                 label="Article"
                                 type="text"
                                 name="post_article"
-                                className='h-[30rem] resize-none'
+                                className='h-[37.5rem] resize-none'
                             />
                         </div>
                          </div>
@@ -227,7 +265,7 @@ const ModalAddPost = ({itemEdit, position}) => {
                     
                     </Formik>
                 </div>
-        </div>
+        </motion.div>
     </ModalWrapper>
     </div>
   )

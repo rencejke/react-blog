@@ -55,9 +55,9 @@ const Users = () => {
                 <div className='tab flex justify-between items-center mt-8 border-b border-line mb-8 '>
                    <h1>Search</h1>
 
-                    <button className='btn btn--accent' onClick={handleAdd}>
+                   <motion.button className='btn btn--accent' onClick={handleAdd} whileTap={{scale: 0.97}}>
                         <FiPlus/> New
-                    </button>
+                    </motion.button>
                 </div>
                     {/* table here */}
                     <UsersTable  isLoading={isLoading} user={user} isFetching={isFetching} setItemEdit={setItemEdit}/>
@@ -66,8 +66,11 @@ const Users = () => {
         </div>
 
         </main>
-
+        
+        <AnimatePresence>
         {store.isAdd && <ModalAddUser  itemEdit={itemEdit}/>}
+        </AnimatePresence>
+
         {store.success && <Toast/>}
         {store.error && <ModalError position="center"/>}
     </section>

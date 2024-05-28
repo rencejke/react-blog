@@ -9,6 +9,7 @@ import Users from "./components/pages/developer/dashboard/user/Users"
 import PageNotFound from "./components/partials/PageNotFound"
 import Category from "./components/pages/developer/dashboard/category/Category"
 import ProtectedRoute from "./components/pages/developer/access/ProtectedRoute"
+import Tag from "./components/pages/developer/dashboard/tag/Tag"
 
 function App() {
 
@@ -24,11 +25,12 @@ function App() {
         <Routes>
         <Route path="/home" element={<Home/>}/>
         <Route path="/single" element={<ProtectedRoute><Single/></ProtectedRoute>}/>
-        <Route path="/login" element={<ProtectedRoute><Login/></ProtectedRoute>}/>
+        <Route path="/login" element={<Login/>}/>
         <Route path="/dashboard/post" element={<ProtectedRoute><Post/></ProtectedRoute>}/>
         <Route path="/users" element={<ProtectedRoute><Users/></ProtectedRoute>}/>
         <Route path="/*" element={<ProtectedRoute><PageNotFound/></ProtectedRoute>}/>
         <Route path="/dashboard/category" element={<ProtectedRoute><Category/></ProtectedRoute>}/>
+        <Route path="/dashboard/tag" element={<ProtectedRoute><Tag/></ProtectedRoute>}/>
     
         </Routes>
       </Router>

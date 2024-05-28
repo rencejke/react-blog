@@ -1,5 +1,6 @@
 import React from 'react'
 import { devBaseImgUrl } from '../../../../helpers/functions-general'
+import Markdown from 'react-markdown'
 
 const Card = ({height="lg", item}) => {
   return (
@@ -12,10 +13,10 @@ const Card = ({height="lg", item}) => {
 
 
     <small className='hover:bg-accent bg-stone-600  px-2 py-1 rounded-lg text-white font-bold 
-        text-xs'>Travel</small>
+        text-xs'>{item?.tag_title}</small>
 
         <h3 className='my-4'>{item?.post_title}</h3>
-        <p className='line-clamp-3 text-balance'>{item?.post_article}</p>
+        <Markdown className='line-clamp-3 text-balance'>{item?.post_article}</Markdown>
 
         <div className='flex justify-between items-center mt-4'>
             <div className='flex gap-3 items-center'>

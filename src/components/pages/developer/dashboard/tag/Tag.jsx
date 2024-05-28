@@ -2,7 +2,7 @@ import React from 'react'
 import Navigation from '../../../../partials/Navigation'
 import Header from '../../../../partials/Header'
 import { Link } from 'react-router-dom'
-import PostTable from './CategoryTable'
+import PostTable from './TagTable'
 import { FiPlus } from 'react-icons/fi'
 import useQueryData from '../../../../custom-hook/useQueryData'
 import { setIsAdd } from '../../../../../store/StoreAction'
@@ -10,11 +10,11 @@ import { StoreContext } from '../../../../../store/StoreContext'
 import ModalError from '../../../../partials/modals/ModalError'
 import Toast from '../../../../partials/Toast'
 import Searchbar from '../../../../partials/Searchbar'
-import ModalAddCategory from './ModalAddCategory'
-import CategoryTable from './CategoryTable'
+import TagTable from './TagTable'
+import ModalAddTag from './ModalAddTag'
 import { AnimatePresence, motion } from 'framer-motion'
 
-const Category = () => {
+const Tag = () => {
     const {store, dispatch} = React.useContext(StoreContext)
     const [isSearch, setIsSearch] = React.useState(false)
     const [keyword , setKeyword] = React.useState('');
@@ -24,11 +24,11 @@ const Category = () => {
         isLoading,
         isFetching,
         error,
-        data: category,
+        data: tag,
       } = useQueryData (
-       "/v1/category", // endpoint
+       "/v1/tag", // endpoint
        "get", // method
-       "category", // key      
+       "tag", // key      
       );
 
 
@@ -38,14 +38,14 @@ const Category = () => {
     }
   return (
     <section className='flex overflow-hidden'>
-    <Navigation menu="category"/>
+    <Navigation menu="tag"/>
     <main className='w-[calc(100%-250px)] overflow-x-hidden'>
         <Header/>
 
     <div className='flex '>
         <div className={`main-wrapper transition-all px-4 py-3  sticky top-0 w-full`}>
             <div className='flex justify-between items-center'>
-                <h1>Category</h1>
+                <h1>tag</h1>
                 <Searchbar setIsSeach={setIsSearch} setKeyword={setKeyword}/>
             </div>
         
@@ -55,13 +55,13 @@ const Category = () => {
                         <FiPlus/> New
                     </motion.button>
             </div>
-            <CategoryTable isLoading={isLoading} category={category} isFetching={isFetching} setItemEdit={setItemEdit}/>
+            <TagTable isLoading={isLoading} tag={tag} isFetching={isFetching} setItemEdit={setItemEdit}/>
         </div>
     </div>
     </main>
      
     <AnimatePresence>
-    {store.isAdd && <ModalAddCategory  itemEdit={itemEdit}/>}
+    {store.isAdd && <ModalAddTag  itemEdit={itemEdit}/>}
     </AnimatePresence>
     
     {store.error && <ModalError position="center"/>}
@@ -70,4 +70,4 @@ const Category = () => {
   )
 }
 
-export default Category
+export default Tag

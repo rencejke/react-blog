@@ -2,10 +2,12 @@
 
 Class Post {
     public $post_aid;
+    public $post_is_featured;
     public $post_title;
     public $post_image;
     public $post_author;
     public $post_category_id;
+    public $post_tag_id;
     public $post_is_active;
     public $post_article;
     public $post_publish_date;
@@ -18,12 +20,15 @@ Class Post {
     public $lastInsertedId;
     public $tblPost;
     public $tblCategory;
+    public $tblTag;
     
 
     public function __construct($db) {
         $this->connection = $db;
         $this->tblPost = "post";
+        //join
         $this->tblCategory = "category";
+        $this->tblTag = "tag";
     }
 
     public function create() {
@@ -31,6 +36,8 @@ Class Post {
             $sql = "insert into {$this->tblPost} ";
             $sql .= "( post_title, ";
             $sql .= "post_category_id, ";
+            $sql .= "post_is_featured, ";
+            $sql .= "post_tag_id, ";
             $sql .= "post_image, ";
             $sql .= "post_author, ";
             $sql .= "post_is_active, ";
@@ -40,6 +47,8 @@ Class Post {
             $sql .= "post_datetime ) values ( ";
             $sql .= ":post_title, ";
             $sql .= ":post_category_id, ";
+            $sql .= ":post_is_featured, ";
+            $sql .= ":post_tag_id, ";
             $sql .= ":post_image, ";
             $sql .= ":post_author, ";
             $sql .= ":post_is_active, ";
@@ -51,6 +60,8 @@ Class Post {
             $query->execute([
                 "post_title" => $this->post_title,
                 "post_category_id" => $this->post_category_id,
+                "post_is_featured" => $this->post_is_featured,
+                "post_tag_id" => $this->post_tag_id,
                 "post_image" => $this->post_image,
                 "post_author" => $this->post_author,
                 "post_is_active" => $this->post_is_active,
@@ -74,8 +85,28 @@ Class Post {
         try {
             $sql = "select * ";
             $sql .= "from {$this->tblPost} as post, ";
-            $sql .= "{$this->tblCategory} as category ";
+            $sql .= "{$this->tblCategory} as category, ";
+            $sql .= "{$this->tblTag} as tag ";
             $sql .= "where post.post_category_id = category.category_aid ";
+            $sql .= "and post.post_tag_id = tag.tag_aid ";
+            $sql .= "order by post.post_is_active desc ";
+            $query = $this->connection->query($sql);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readByFeatured()
+    {
+        try {
+            $sql = "select * ";
+            $sql .= "from {$this->tblPost} as post, ";
+            $sql .= "{$this->tblCategory} as category, ";
+            $sql .= "{$this->tblTag} as tag ";
+            $sql .= "where post.post_category_id = category.category_aid ";
+            $sql .= "and post.post_tag_id = tag.tag_aid ";
+            $sql .= "and post.post_is_featured = 1 ";
             $sql .= "order by post.post_is_active desc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
@@ -88,8 +119,12 @@ Class Post {
     {
         try {
             $sql = "select * ";
-            $sql .= "from {$this->tblPost} ";
-            $sql .= "where post_aid = :post_aid ";
+            $sql .= "from {$this->tblPost} as post, ";
+            $sql .= "{$this->tblCategory} as category, ";
+            $sql .= "{$this->tblTag} as tag ";
+            $sql .= "where post.post_category_id = category.category_aid ";
+            $sql .= "and post.post_tag_id = tag.tag_aid ";
+            $sql .= "and post_aid = :post_aid ";
             $sql .= "order by post_aid asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
@@ -100,7 +135,6 @@ Class Post {
         }
         return $query;
     }
-
     
 
     public function delete()
@@ -126,6 +160,8 @@ Class Post {
             $sql .= "post_image = :post_image, ";
             $sql .= "post_author = :post_author, ";
             $sql .= "post_category_id = :post_category_id, ";
+            $sql .= "post_is_featured = :post_is_featured, ";
+            $sql .= "post_tag_id = :post_tag_id, ";
             $sql .= "post_article = :post_article, ";
             $sql .= "post_publish_date = :post_publish_date, ";
             $sql .= "post_datetime = :post_datetime ";
@@ -136,6 +172,8 @@ Class Post {
                 "post_image" => $this->post_image,
                 "post_author" => $this->post_author,
                 "post_category_id" => $this->post_category_id,
+                "post_is_featured" => $this->post_is_featured,
+                "post_tag_id" => $this->post_tag_id,
                 "post_article" => $this->post_article,
                 "post_publish_date" => $this->post_publish_date,
                 "post_datetime" => $this->post_datetime,

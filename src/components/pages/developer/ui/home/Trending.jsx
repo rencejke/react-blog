@@ -22,8 +22,11 @@ const Trending = () => {
         "post", // key
       );
 
-      const getTrending = () => post?.data.filter((item) => item.post_category_id === 1)
-    
+      const getTrending = () => post?.data.filter((item) => item.post_category_id === 1  && 
+      item.post_is_featured === 0)
+      const getTrendingMain = () => post?.data.filter((item) => item.post_is_featured === 1)
+
+
 
   return (
     <section className='py-10'>
@@ -31,7 +34,7 @@ const Trending = () => {
          <SectionBanner/>
 
          <div className="grid mt-10 gap-10  md:grid-cols-[1fr_2fr]">
-          <Card/>
+          <Card item={!isLoading && getTrendingMain()[0]}/>
 
             <div className='grid gap-10 md:grid md:grid-cols-2'>
 
@@ -43,7 +46,7 @@ const Trending = () => {
                 </Link>
             </div>
         <small className='hover:bg-accent bg-stone-600  px-2 py-1 rounded-lg text-white font-bold 
-            text-xs'>Travel</small>
+            text-xs'>{item.tag_title}</small>
             <h3 className='mt-4 my-0 whitespace-normal'>{item.post_category}.</h3>
         
             {/* <Markdown>{item.post_article}</Markdown> */}

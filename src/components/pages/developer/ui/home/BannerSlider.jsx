@@ -1,26 +1,59 @@
 import React from 'react'
+import SpinnerWindow from '../../../../partials/spinners/SpinnerWindow';
+import { devBaseImgUrl } from '../../../../helpers/functions-general';
+import useQueryData from '../../../../custom-hook/useQueryData';
+import Slider from 'react-slick';
 
 const BannerSlider = () => {
-  return (
-    <div className='banner-slider'>
-    <div className='relative flex justify-center items-center h-[50vh]'>
-        <img src="https://via.placeholder.com/800x400" alt="" className='object-cover
-         h-[50vh] w-full absolute top-0 left-0 -z-[1]'/>
-        <div className='text-center'>
-            <ul className='flex gap-2 text-center justify-center'>
-                <li className='bg-slate-400 py-1 px-2 rounded-lg 
-                text-white font-bold text-xs'>Travel</li>
-                
-            </ul>
 
-            <h2 className='px-1 mt-4 text-balance text-3xl text-primary'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
-            <ul className='flex gap-4 justify-center text-sm text-primary'>
-                <li>loverboy</li>
-                <li>May 22, 2024</li>
-            </ul>
+  const {
+    isLoading,
+    isFetching,
+    error,
+    data: post,
+  } = useQueryData(
+    "/v1/post",
+    "get", // method
+    "post", // key
+  );
+
+  var settings = {
+    infinite: true,
+    speed: 500,
+    dots: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+
+  };
+
+
+  return (
+    <div className='banner-slider overflow-hidden'>
+   
+     <Slider {...settings}>
+    {isLoading ? <SpinnerWindow/> : 
+         post?.data.map((item, key)=>(
+        <div className='relative place-content-center h-[50vh] bg-black'>
+            <img src={`${devBaseImgUrl}/${item.post_image}`} alt="" className='object-cover h-[50vh] w-full absolute top-0 left-0 opacity-25' />
+            <div className='text-center'>
+                <ul className='flex justify-center gap-2'>
+                    <li className='bg-stone-600  px-2 py-1 rounded-lg text-white font-bold 
+                    text-xs'>{item.tag_title}</li>
+                </ul>
+
+                <h2 className='px-1 mt-4 text-balance text-3xl text-primary'>{item.post_title}.</h2>
+
+                <ul className='flex justify-center gap-4 text-sm text-primary'>
+                    <li>{item.post_author}</li>
+                    <li>{item.publish_date}</li>
+                </ul>
+            </div>
         </div>
-    </div>
-    </div>
+        ))
+    }
+</Slider>
+    
+</div>
   )
 }
 

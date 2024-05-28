@@ -9,6 +9,7 @@ import { InputText } from '../../../../helpers/FormInputs'
 import { queryData } from '../../../../helpers/queryData'
 import SpinnerButton from '../../../../partials/spinners/SpinnerButton'
 import ModalWrapper from '../../../../partials/ModalWrapper'
+import { motion } from 'framer-motion'
 
 const ModalAddUser = ({itemEdit }) => {
 
@@ -59,7 +60,12 @@ const ModalAddUser = ({itemEdit }) => {
     })
   return (
     <ModalWrapper>
-       <div className="main-modal w-[320px] bg-black text-white text-content h-full">
+       <motion.div className="main-modal w-[320px] bg-black text-white text-content h-full"
+         initial={{ opacity: 0, y:"50px" }}
+         animate={{ opacity: 1, y:"0"}}
+         exit={{ opacity: 0, y:"50px" }}
+         
+       >
               <div className="modal-header p-4 relative">
                   <h2>{itemEdit ? "Edit" : "New"} User</h2>
                   <button className='absolute top-[25px] right-4' onClick={handleClose}><LiaTimesSolid/></button>
@@ -102,7 +108,7 @@ const ModalAddUser = ({itemEdit }) => {
                   
                   </Formik>
               </div>
-      </div>
+      </motion.div>
   </ModalWrapper>
 
   )

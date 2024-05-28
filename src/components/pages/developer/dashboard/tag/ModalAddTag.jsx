@@ -17,7 +17,7 @@ import ModalWrapper from '../../../../partials/ModalWrapper'
 import { motion } from 'framer-motion'
 
 
-const ModalAddCategory = ({itemEdit }) => {
+const ModalAddTag = ({itemEdit }) => {
     const {store, dispatch} = React.useContext(StoreContext);
     const handleClose = () => dispatch(setIsAdd(false));
 
@@ -26,13 +26,13 @@ const ModalAddCategory = ({itemEdit }) => {
     const mutation = useMutation({
         mutationFn: (values) =>
         queryData(
-            itemEdit ? `/v1/category/${itemEdit.category_aid}` :`/v1/category`,
+            itemEdit ? `/v1/tag/${itemEdit.tag_aid}` :`/v1/tag`,
             itemEdit ? "put" : "post",
             values
         ),
    
         onSuccess: (data) => {
-        queryClient.invalidateQueries({ queryKey: ["category"] });
+        queryClient.invalidateQueries({ queryKey: ["tag"] });
        
         if (data.success) {
             dispatch(setIsAdd(false));
@@ -49,22 +49,23 @@ const ModalAddCategory = ({itemEdit }) => {
 
     const initVal = {
         
-        category_title : itemEdit ? itemEdit.category_title : "",
+        tag_title : itemEdit ? itemEdit.tag_title : "",
         
     }
 
     const yupSchema = Yup.object({
-        category_title: Yup.string().required('Required'),
+        tag_title: Yup.string().required('Required'),
     })
   return (
     <ModalWrapper>
             <motion.div className="main-modal w-[400px] bg-secondary text-content h-screen"
-               initial={{ opacity: 0, y:"50px" }}
-               animate={{ opacity: 1, y:"0"}}
-               exit={{ opacity: 0, y:"50px" }}
+             
+             initial={{ opacity: 0, y:"50px" }}
+             animate={{ opacity: 1, y:"0"}}
+             exit={{ opacity: 0, y:"50px" }}
             >
               <div className="modal-header p-4 relative">
-                  <h2>New category</h2>
+                  <h2>New tag</h2>
                   <button className='absolute top-[25px] right-4' onClick={handleClose}><LiaTimesSolid/></button>
               </div>
               <div className="modal-body p-4">
@@ -84,7 +85,7 @@ const ModalAddCategory = ({itemEdit }) => {
                                 <InputText
                                     label="Title"
                                     type="text"
-                                    name="category_title"
+                                    name="tag_title"
                                 />
                             </div>
                             
@@ -104,4 +105,4 @@ const ModalAddCategory = ({itemEdit }) => {
   )
 }
 
-export default ModalAddCategory
+export default ModalAddTag

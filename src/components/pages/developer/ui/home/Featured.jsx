@@ -21,7 +21,6 @@ const Featured = () => {
   const getFeatured = () => post?.data.filter((item) => item.post_category_id === 2)
 
 
-
   return (
     <section className='featured py-10'>
   <div className="container">
