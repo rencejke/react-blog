@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2024 at 09:45 AM
+-- Generation Time: May 28, 2024 at 09:19 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -51,10 +51,12 @@ INSERT INTO `category` (`category_aid`, `category_title`, `category_is_active`, 
 
 CREATE TABLE `post` (
   `post_aid` int(11) NOT NULL,
+  `post_is_featured` tinyint(1) NOT NULL,
   `post_title` varchar(50) NOT NULL,
   `post_image` varchar(100) NOT NULL,
   `post_author` varchar(50) NOT NULL,
   `post_category_id` int(11) NOT NULL,
+  `post_tag_id` int(11) NOT NULL,
   `post_is_active` tinyint(1) NOT NULL,
   `post_article` text NOT NULL,
   `post_publish_date` varchar(20) NOT NULL,
@@ -66,11 +68,35 @@ CREATE TABLE `post` (
 -- Dumping data for table `post`
 --
 
-INSERT INTO `post` (`post_aid`, `post_title`, `post_image`, `post_author`, `post_category_id`, `post_is_active`, `post_article`, `post_publish_date`, `post_datetime`, `post_created`) VALUES
-(1, 'Bini 1', 'bini3.jpg', 'Bini', 1, 1, 'test', '2024-05-24', 2024, 2024),
-(3, 'asasas', 'Untitled design.png', 'asasa', 1, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id fermentum felis. In elementum libero quis dictum aliquam. Curabitur lacus ligula', 'now', 2024, 2024),
-(4, 'test', 'bini2.webp', 'binni', 1, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id fermentum felis. In elementum libero quis dictum aliquam. Curabitur lacus ligula', '2024-05-24', 2024, 2024),
-(5, 'Karina Aespa', 'karina-aespa-girls-4k-wallpaper-uhdpaper.com-899@1@g.jpg', 'karina', 2, 1, 'sdsojdjskdjhnsdjnsjdnjsndsndjnsdnsjdnjsndnsdns', '2024-05-24', 2024, 2024);
+INSERT INTO `post` (`post_aid`, `post_is_featured`, `post_title`, `post_image`, `post_author`, `post_category_id`, `post_tag_id`, `post_is_active`, `post_article`, `post_publish_date`, `post_datetime`, `post_created`) VALUES
+(1, 1, 'Bini 1', 'bini3.jpg', 'Bini', 1, 3, 1, '# Heading level 1', '2024-05-24', 2024, 2024),
+(3, 0, 'asasas', 'Untitled design.png', 'asasa', 1, 2, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id fermentum felis. In elementum libero quis dictum aliquam. Curabitur lacus ligula', 'now', 2024, 2024),
+(4, 0, 'test', 'bini2.webp', 'binni', 1, 2, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id fermentum felis. In elementum libero quis dictum aliquam. Curabitur lacus ligula', '2024-05-24', 2024, 2024),
+(5, 0, 'Karina Aespa', 'karina-aespa-girls-4k-wallpaper-uhdpaper.com-899@1@g.jpg', 'karina', 2, 2, 1, 'sdsojdjskdjhnsdjnsjdnjsndsndjnsdnsjdnjsndnsdns', '2024-05-24', 2024, 2024),
+(6, 0, 'testing tag', 'bini2.webp', 'test loverboy', 1, 2, 1, '## heading 1\n\n*heading 1*', '2024-05-28', 2024, 2024),
+(7, 0, 'test trending', 'banner-careers-sm.png', 'mcdo', 1, 3, 1, '## Heading 1', '2024-05-28', 2024, 2024);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tag`
+--
+
+CREATE TABLE `tag` (
+  `tag_aid` int(11) NOT NULL,
+  `tag_title` varchar(50) NOT NULL,
+  `tag_is_active` tinyint(1) NOT NULL,
+  `tag_datetime` varchar(20) NOT NULL,
+  `tag_created` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tag`
+--
+
+INSERT INTO `tag` (`tag_aid`, `tag_title`, `tag_is_active`, `tag_datetime`, `tag_created`) VALUES
+(2, 'test', 1, '2024-05-28 07:50:02', '2024-05-28 07:50:02'),
+(3, 'Food', 1, '2024-05-28 08:21:34', '2024-05-28 08:21:34');
 
 -- --------------------------------------------------------
 
@@ -113,6 +139,12 @@ ALTER TABLE `post`
   ADD PRIMARY KEY (`post_aid`);
 
 --
+-- Indexes for table `tag`
+--
+ALTER TABLE `tag`
+  ADD PRIMARY KEY (`tag_aid`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -132,7 +164,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `post_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `post_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `tag`
+--
+ALTER TABLE `tag`
+  MODIFY `tag_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
