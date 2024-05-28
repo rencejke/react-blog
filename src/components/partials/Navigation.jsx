@@ -42,9 +42,9 @@ const Navigation = ({menu}) => {
          {navList.map((item, i) => (
           <motion.li className={`nav-link ${menu === item.menu ? "active" : ""}`}  
             key={i}
-            initial={{opacity: 0, x: "-10px"}}
+            initial={{opacity: 0, x: "10px"}}
             animate={{opacity: 1, x: "0px"}}
-            exit={{opacity: 0, x: "-10px"}}
+            exit={{opacity: 0, x: "10px"}}
             transition={{duration: 1, delay: i *0.2}}
             >
               <Link to={`${item.url}`}>{item.icon} {item.name}</Link>
@@ -52,6 +52,14 @@ const Navigation = ({menu}) => {
          ))}        
         
       </ul>
+
+
+      {/* <ul className='nav'>
+        <li className='nav-link '><Link to="#"><MdOutlineDashboard />Dashboard</Link></li>
+        <li className={`nav-link ${menu === "post" ? "active" : ""}`}><Link to="/dashboard/post"><AiOutlineMessage />Post</Link></li>
+        <li className={`nav-link ${menu === "category" ? "active" : ""}`}><Link to="/dashboard/category"><MdOutlineDashboard />Category</Link></li>
+        <li className={`nav-link ${menu === "tag" ? "active" : ""}`}><Link to="/dashboard/tag"><MdOutlineDashboard />Tag</Link></li>
+      </ul> */}
     </aside>
   )
 }
